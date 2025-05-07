@@ -1,7 +1,43 @@
-<<<<<<< HEAD
-# Fashion
-this is fashion project
-=======
+# Fashion project With Laravel 11 Api
+
+## To Run This Project Follow the following instructions
+
+## Installation guide
+* clone the repository
+```
+git clone git@github.com:Mohamedshaban101/Fashion.git
+```
+* Install composer dependencies by running composer install
+```
+composer install
+```
+* Go to localhost/phpmyadmin and create database called fashion
+  
+* Go to .env file
+```
+DB_DATABASE=fashion
+```
+* run this code to migrate the tables
+```
+php artisan migrate
+```
+* install jwt-auth
+```
+composer require tymon/jwt-auth
+
+php artisan vendor:publish --provider="Tymon/JWTAuth/Providers/LaravelServiceProvider"
+
+php artisan jwt:secret
+```
+* install laravel socialite
+```
+composer require laravel socialite
+```
+* install stripe
+```
+composer require stripe/stripe-php
+
+```
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
