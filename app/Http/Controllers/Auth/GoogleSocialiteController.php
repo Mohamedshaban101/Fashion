@@ -12,11 +12,11 @@ use App\Http\Controllers\Auth\BaseController;
 
 class GoogleSocialiteController extends BaseController
 {
-    public function redirectTo(){
+    public function redirectToGoogle(){
         return Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
     }
 
-    public function handle(){
+    public function handleGoogle(){
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
 

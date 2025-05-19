@@ -44,7 +44,11 @@ class RegisterController extends BaseController
                 'password'  => Hash::make($validated['password']),
             ]);
             $token = JWTAuth::fromUser($user);
-            Mail::to($user->email)->send(new WelcomeUserMail($user));
+            if(!$user->hasVerifiedEmail()){
+                $user->sendEmailVerificationNotification();
+            }else{
+                Mail::to($user->email)->send(new WelcomeUserMail($user));
+            }
             return $this->sendResponse('user registration successfully' , $user , $token , 200);
         } catch (JWTException $e) {
             return $this->sendError('Token Creation Error' , $e->getMessage());

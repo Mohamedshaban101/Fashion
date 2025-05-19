@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\Orders\OrdersController;
 use App\Http\Controllers\Cart\RemoveItemCartController;
 use App\Http\Controllers\Auth\GithubSocialiteController;
 use App\Http\Controllers\Auth\GoogleSocialiteController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\Admin\Brands\StoreBrandController;
 use App\Http\Controllers\Admin\Colors\StoreColorController;
 use App\Http\Controllers\Admin\Brands\DeleteBrandController;
@@ -42,8 +43,17 @@ use App\Http\Controllers\Admin\Categories\UpdateCategoryController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-Route::post('register' , RegisterController::class);
-Route::post('login' , LoginController::class);
+
+Route::post('register', RegisterController::class);
+Route::post('login', LoginController::class)->name('login');
+Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Email verified successfully'
+    ]);
+})->middleware(['signed'])->name('verification.verify');
 // socialite with google
 Route::get('google/auth' , [GoogleSocialiteController::class , 'redirectToGoogle']);
 Route::get('auth/google/callback' , [GoogleSocialiteController::class , 'handleGoogle']);
@@ -108,6 +118,6 @@ Route::middleware(['CheckAdmin'])->group(function(){
     Route::get('admin/orders' , OrdersController::class);
 });
 
-Route::get('/' , HomeController::class);
+Route::get('/' , HomeController::class)->middleware(['verified']);
 Route::get('products' , ProductsController::class);
 Route::get('products/{id}' , ShowProductController::class);
