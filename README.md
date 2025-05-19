@@ -30,6 +30,9 @@ php artisan vendor:publish --provider="Tymon/JWTAuth/Providers/LaravelServicePro
 php artisan jwt:secret
 ```
 * install laravel socialite
+  
+    - Google Socialite
+    - Github Socialite
 ```
 composer require laravel socialite
 ```
@@ -39,8 +42,36 @@ composer require stripe/stripe-php
 
 ```
 ## Features
+* Login
+
+    ![Image](https://github.com/user-attachments/assets/ab2084c1-33e1-4872-92e2-aa705dae6638)
+  
 * Home Page
+  
   ![Image](https://github.com/user-attachments/assets/2a580712-18a3-46c5-9667-b063eb6add3c)
+
+  ![Image](https://github.com/user-attachments/assets/e038e335-c89f-440b-af62-b63e2e1c16d3)
+
+* Products
+
+  ![Image](https://github.com/user-attachments/assets/dce40b87-0c6b-451d-b4bd-e1f1b0d71e57)
+
+* Product Details
+
+  ![Image](https://github.com/user-attachments/assets/e2a80a8a-652c-41e7-90f0-f4250deb5085)
+  
+* Cart
+
+  ![Image](https://github.com/user-attachments/assets/4d005d50-feb9-4b33-abb7-5017aedf2663)
+
+* Checkout
+
+  ![Image](https://github.com/user-attachments/assets/3ec7e707-e319-421e-8d97-3485542c0c28)
+
+* Orders
+
+  ![Image](https://github.com/user-attachments/assets/12222da8-b153-419d-926d-62f8f9b2cecf)
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
