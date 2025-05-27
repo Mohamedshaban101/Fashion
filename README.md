@@ -39,7 +39,10 @@ composer require laravel socialite
 * install stripe
 ```
 composer require stripe/stripe-php
-
+```
+* install vonage sms
+```
+composer require vonage/client
 ```
 ## Features
 * Login
