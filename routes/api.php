@@ -46,14 +46,53 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class)->name('login');
-Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
+Route::get('email/verify/{id}/{hash}' , function(Request $request , $id , $hash){
+    $user = User::findOrFail($id);
 
+    if(!$request->hasValidSignature()){
+        return response()->json([
+            'status' => false,
+            'message'=> 'invalid or expired email verification link'
+        ],403);
+    }
+
+    if($user->hasVerifiedEmail()){
+        return response()->json([
+            'status' => false,
+            'message'=> 'email already verify',
+        ]); 
+    }
+
+    if(! hash_equals((string) $hash , $user->getEmailForVerification())){
+        return response()->json([
+            'status' => false,
+            'message'=> 'invalid hash'
+        ]);
+    }
+
+    $user->markEmailAsVerified();
+    event(new Verified($user));
     return response()->json([
         'status' => true,
         'message' => 'Email verified successfully'
     ]);
-})->middleware(['signed'])->name('verification.verify');
+})->middleware('signed')->name('verification.verify');
+
+Route::post('email/resend' , function(Request $request){
+    $request->validate([
+        'email' => 'required|email',
+    ]);
+
+    $user = User::where('email' , $request->email)->first();
+
+    if($user->hasVerifiedEmail()){
+        return response()->json('email already verify');
+    }
+
+    $user->sendEmailVerificationNotification();
+
+    return response()->json('verification email resend');
+});
 // socialite with google
 Route::get('google/auth' , [GoogleSocialiteController::class , 'redirectToGoogle']);
 Route::get('auth/google/callback' , [GoogleSocialiteController::class , 'handleGoogle']);

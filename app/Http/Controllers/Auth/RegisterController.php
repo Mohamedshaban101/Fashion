@@ -11,13 +11,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Services\VonageSmsService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Controllers\Auth\BaseController;
 
 class RegisterController extends BaseController
 {
-    public function __invoke(Request $request){
+    public function __invoke(Request $request , VonageSmsService $vonageSmsService){
         $validator = Validator::make($request->all() , [
             'username'      => ['required' , 'string' , 'max:255'],
             'email'         => ['required' , 'email' , 'max:255','unique:users'],
@@ -46,9 +47,8 @@ class RegisterController extends BaseController
             $token = JWTAuth::fromUser($user);
             if(!$user->hasVerifiedEmail()){
                 $user->sendEmailVerificationNotification();
-            }else{
-                Mail::to($user->email)->send(new WelcomeUserMail($user));
             }
+            $vonageSmsService->send($user->phone , 'Welcome Fahsion');
             return $this->sendResponse('user registration successfully' , $user , $token , 200);
         } catch (JWTException $e) {
             return $this->sendError('Token Creation Error' , $e->getMessage());

@@ -43,6 +43,11 @@ return [
         'client_id'         => env('GITHUB_CLIENT_ID'),
         'client_secret'     => env('GITHUB_CLIENT_SECRET'),
         'redirect'          => env('GITHUB_REDIRECT_URI')
+    ],
+    'vonage' => [
+        'key'        => env('VONAGE_KEY'),
+        'secret'     => env('VONAGE_SECRET'),
+        'from'       => env('VONAGE_FROM')
     ]
 
 ];

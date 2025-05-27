@@ -31,7 +31,6 @@ class LoginController extends BaseController
                 return $this->sendError('Ivalid credentials' , [] , 403);
             }
             $user = auth()->user();
-            Mail::to($user->email)->send(new WelcomeUserMail($user));
             return $this->sendResponse('User Login Successfully' , $user , $token , 200);
         } catch (JWTException $e) {
             return $this->sendError('Could not create token' , $e->getMessage());
