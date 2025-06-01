@@ -40,6 +40,10 @@ use App\Http\Controllers\Admin\Categories\StoreCategoryController;
 use App\Http\Controllers\Admin\Categories\DeleteCategoryController;
 use App\Http\Controllers\Admin\Categories\UpdateCategoryController;
 
+
+Route::get('/ping', function () {
+    return response()->json(['status' => 'online']);
+});
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
